@@ -82,7 +82,7 @@ public class ListMenu<T extends SavedPosition> extends Menu {
                         "ppppppppp",
                         "ppppppppp",
                         "ppppppppp",
-                        "bl  i  ne"},
+                        " l  i  n "},
                 6 - plugin.getSettings().getMenuSize(), 6);
     }
 

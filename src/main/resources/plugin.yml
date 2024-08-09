@@ -1,8 +1,8 @@
 name: HuskHomesGUI
 main: net.william278.huskhomes.gui.HuskHomesGui
-version: '${version}'
+version: '4.0.0-custom'
 description: '${description}'
-api-version: 1.16
+api-version: 1.20
 depend: [ 'HuskHomes' ]
 author: 'William278'
 website: 'https://william278.net/'

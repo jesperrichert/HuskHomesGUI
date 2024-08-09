@@ -25,8 +25,13 @@ import net.william278.huskhomes.gui.HuskHomesGui;
 import net.william278.huskhomes.gui.menu.ListMenu;
 import net.william278.huskhomes.position.Home;
 import net.william278.huskhomes.user.OnlineUser;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class ListListener implements Listener {
@@ -48,11 +53,7 @@ public class ListListener implements Listener {
         if (event.getIsPublicHomeList()) {
             menu = ListMenu.publicHomes(plugin, event.getHomes());
         } else {
-            menu = ListMenu.homes(plugin, event.getHomes(),
-                    event.getHomes().stream()
-                            .findFirst()
-                            .map(Home::getOwner)
-                            .orElse(onlineUser));
+            menu = ListMenu.homes(plugin, event.getHomes(), event.getHomes().stream().findFirst().map(Home::getOwner).orElse(onlineUser));
         }
         menu.show(onlineUser);
     }
@@ -67,5 +68,5 @@ public class ListListener implements Listener {
         event.setCancelled(true);
         ListMenu.warps(plugin, event.getWarps()).show(onlineUser);
     }
-
 }
+

@@ -49,11 +49,11 @@ public class Settings {
     private int textWrapLength = 17;
 
     @YamlKey("menu.items.homes_filler")
-    private String homesFillerItem = "minecraft:orange_stained_glass_pane";
+    private String homesFillerItem = "minecraft:air";
     @YamlKey("menu.items.public_homes_filler")
-    private String publicHomesFillerItem = "minecraft:lime_stained_glass_pane";
+    private String publicHomesFillerItem = "minecraft:air";
     @YamlKey("menu.items.warps_filler")
-    private String warpsFillerItem = "minecraft:cyan_stained_glass_pane";
+    private String warpsFillerItem = "minecraft:air";
     @YamlKey("menu.items.default_icon")
     private String defaultIcon = "minecraft:stone";
     @YamlKey("menu.icons.paginate_first_page")
@@ -69,13 +69,15 @@ public class Settings {
 
     @YamlComment("Options for the home/warp editor GUI")
     @YamlKey("editor.icons.home_editor_filler")
-    private String homeEditorFillerIcon = "minecraft:lime_stained_glass_pane";
+    private String homeEditorFillerIcon = "minecraft:air";
     @YamlKey("editor.icons.warp_editor_filler")
-    private String warpEditorFillerIcon = "minecraft:lime_stained_glass_pane";
+    private String warpEditorFillerIcon = "minecraft:air";
     @YamlKey("editor.icons.back_button")
-    private String editorBackButtonIcon = "minecraft:orange_stained_glass_pane";
+    private String editorBackButtonIcon = "minecraft:barrier";
+    @YamlKey("editor.icons.coming_soon_button")
+    private String commingSoonIcon = "minecraft:name_tag";
     @YamlKey("editor.icons.edit_location_button")
-    private String editorEditLocationButtonIcon = "minecraft:oak_boat";
+    private String editorEditLocationButtonIcon = "minecraft:oak_sign";
     @YamlKey("editor.icons.edit_name_button")
     private String editorEditNameButtonIcon = "minecraft:name_tag";
     @YamlKey("editor.icons.edit_description_button")
@@ -168,6 +170,11 @@ public class Settings {
     @NotNull
     public Material getEditorBackButtonIcon() {
         return getMaterial(editorBackButtonIcon);
+    }
+
+    @NotNull
+    public Material getComingSOONButton() {
+        return getMaterial(commingSoonIcon);
     }
 
     @NotNull

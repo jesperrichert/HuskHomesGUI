@@ -1,4 +1,4 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+
 
 plugins {
     id 'java'
@@ -8,8 +8,8 @@ plugins {
 }
 
 group 'net.william278'
-version "$ext.plugin_version${versionMetadata()}"
-description "$ext.plugin_description"
+version "4.0.0-custom"
+description "HuskHomes GUI Custom Edition by Crystopia"
 defaultTasks 'licenseFormat', 'build'
 
 ext {
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.20.6-R0.1-SNAPSHOT'
     compileOnly 'org.jetbrains:annotations:24.0.1'
     compileOnly 'net.william278:huskhomes:4.5.3'
 
@@ -48,14 +48,7 @@ dependencies {
 }
 
 compileJava.options.encoding = 'UTF-8'
-compileJava.options.release.set 16
-
-processResources {
-    filesNotMatching(['**/*.png', '**/*.svg']) {
-        filter ReplaceTokens as Class, beginToken: '${', endToken: '}',
-                tokens: rootProject.ext.properties
-    }
-}
+compileJava.options.release.set 17
 
 shadowJar {
     relocate 'org.apache.commons.io', 'net.william278.huskhomes.gui.libraries.commons.io'
@@ -90,18 +83,3 @@ license {
 }
 
 logger.lifecycle("Building HuskHomesGUI ${version} by William278")
-
-@SuppressWarnings('GrMethodMayBeStatic')
-def versionMetadata() {
-    // Get if there is a tag for this commit
-    def tag = grgit.tag.list().find { it.commit.id == grgit.head().id }
-    if (tag != null) {
-        return ''
-    }
-
-    // Otherwise, get the last commit hash and if it's a clean head
-    if (grgit == null) {
-        return '-' + System.getenv("GITHUB_RUN_NUMBER") ? 'build.' + System.getenv("GITHUB_RUN_NUMBER") : 'unknown'
-    }
-    return '-' + grgit.head().abbreviatedId + (grgit.status().clean ? '' : '-indev')
-}
