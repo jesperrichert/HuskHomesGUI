@@ -1,5 +1,5 @@
-> 🚨 **HuskHomesGUI has been discontinued** 🚨 but i will code it for the new Version of HuskHomes and MC. - I have
-> changed some things in the code and added some new things. But i have add it in the configs (I mean all, if not make
+> 🚨 **HuskHomesGUI has been discontinued** 🚨 **But i will code it for the new Version of HuskHomes and MC.** - I have
+> changed some things in the code and added some new things. And i have add it in the configs (I mean all, if not make
 > an <a href="https://github.com/jesperrichert/HuskHomesGUI/issues">Issues</a>.)
 
 <!--suppress ALL -->
