@@ -114,24 +114,39 @@ public class EditMenu<T extends SavedPosition> extends Menu {
             menu.addElement(new StaticGuiElement('n', new ItemStack(plugin.getSettings().getEditorEditNameButtonIcon()), (click) -> {
                 if (click.getWhoClicked() instanceof Player player) {
                     this.close(api.adaptUser(player));
-                    new AnvilGUI.Builder().onClose(stateSnapshot -> {
-                                stateSnapshot.getPlayer().sendMessage("You closed the inventory.");
-                            }).onClick((slot, stateSnapshot) -> { // Either use sync or async variant, not both
-                                if (slot != AnvilGUI.Slot.OUTPUT) {
-                                    return Collections.emptyList();
-                                }
+                    AnvilGUI.Builder guiBuilder = new AnvilGUI.Builder().plugin(plugin).title(
+                            plugin.getLocales().getLocale("edit_name_title", position.getName()));
+                    guiBuilder.text(position.getName());
 
-                                if (stateSnapshot.getText().equalsIgnoreCase("you")) {
-                                    stateSnapshot.getPlayer().sendMessage("You have magical powers!");
-                                    return Arrays.asList(AnvilGUI.ResponseAction.close());
-                                } else {
-                                    return Arrays.asList(AnvilGUI.ResponseAction.replaceInputText("Try again"));
-                                }
-                            }).preventClose()                                                    //prevents the inventory from being closed
-                            .text("What is the meaning of life?")                              //sets the text the GUI should start with
-                            .title("Enter your answer.")                                       //set the title of the GUI (only works in 1.14+)
-                            .plugin(plugin)                                          //set the plugin instance
-                            .open(player);
+                    guiBuilder.onClick((slot, state) -> {
+                        if (slot != AnvilGUI.Slot.OUTPUT) {
+                            return Collections.emptyList();
+                        }
+
+                        String result = state.getText();
+
+                        try {
+                            if (position instanceof Home home) {
+                                api.renameHome(home, result);
+                            } else if (position instanceof Warp warp) {
+                                api.renameWarp(warp, result);
+                            }
+                        } catch (ValidationException e) {
+                            return List.of();
+                        }
+                        position.getMeta().setName(result);
+
+                        // Refresh menu title
+                        this.close(api.adaptUser(player));
+                        this.destroy();
+                        new EditMenu<>(plugin, position, parentMenu, pageNumber).show(api.adaptUser(player));
+
+                        return List.of();
+                    });
+
+                    guiBuilder.onClose(playerInAnvil -> this.show(api.adaptUser(player)));
+
+                    guiBuilder.open(player);
                 }
                 return true;
             }, plugin.getLocales().getLocale("edit_name_button")));
